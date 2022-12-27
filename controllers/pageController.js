@@ -15,3 +15,9 @@ exports.getCoursesPage = (req, res) => {
         page_name: 'courses',
     });
 };
+
+exports.getRegistersPage = (req, res) => {
+    res.status(200).render('register', {
+        page_name: 'register',
+    });
+};
