@@ -1,3 +1,5 @@
+const nodemailer = require("nodemailer");
+
 exports.getIndexPage = (req, res) => {
     res.status(200).render('index', {
         page_name: 'index',
@@ -26,4 +28,43 @@ exports.getLoginPage = (req, res) => {
     res.status(200).render('login', {
         page_name: 'login',
     });
+};
+
+exports.getContactPage = (req, res) => {
+    res.status(200).render('contact', {
+        page_name: 'contact',
+    });
+};
+
+exports.sendEmail = async (req, res) => {
+
+    const outputMessage = `
+    
+    <h1>Mail Details </h1>
+    <ul>
+      <li>Name: ${req.body.name}</li>
+      <li>Email: ${req.body.email}</li>
+    </ul>
+    <h1>Message</h1>
+    <p>${req.body.message}</p>
+    `
+
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.ethereal.email',
+        port: 587,
+        auth: {
+            user: 'santos.metz@ethereal.email',
+            pass: 'a4wf3vfKgFJY68yF1s'
+        }
+    });
+
+    // send mail with defined transport object
+    let info = await transporter.sendMail({
+        from: '"Smart EDU Contact Form" <sennqrial@gmail.com>', // sender address
+        to: "berkanozgur@hotmail.com", // list of receivers
+        subject: "Smart EDU Contact Form New Message ✔", // Subject line
+        html: outputMessage, // html body
+    });
+
+    res.status(200).redirect('contact');
 };
