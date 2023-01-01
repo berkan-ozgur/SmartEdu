@@ -38,7 +38,8 @@ exports.getContactPage = (req, res) => {
 
 exports.sendEmail = async (req, res) => {
 
-    const outputMessage = `
+    try {
+        const outputMessage = `
     
     <h1>Mail Details </h1>
     <ul>
@@ -49,22 +50,28 @@ exports.sendEmail = async (req, res) => {
     <p>${req.body.message}</p>
     `
 
-    const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
-        auth: {
-            user: 'santos.metz@ethereal.email',
-            pass: 'a4wf3vfKgFJY68yF1s'
-        }
-    });
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.ethereal.email',
+            port: 587,
+            auth: {
+                user: 'santos.metz@ethereal.email',
+                pass: 'a4wf3vfKgFJY68yF1s'
+            }
+        });
 
-    // send mail with defined transport object
-    let info = await transporter.sendMail({
-        from: '"Smart EDU Contact Form" <sennqrial@gmail.com>', // sender address
-        to: "berkanozgur@hotmail.com", // list of receivers
-        subject: "Smart EDU Contact Form New Message ✔", // Subject line
-        html: outputMessage, // html body
-    });
+        // send mail with defined transport object
+        let info = await transporter.sendMail({
+            from: '"Smart EDU Contact Form" <sennqrial@gmail.com>', // sender address
+            to: "berkanozgur@hotmail.com", // list of receivers
+            subject: "Smart EDU Contact Form New Message ✔", // Subject line
+            html: outputMessage, // html body
+        });
 
-    res.status(200).redirect('contact');
+        req.flash("success", "We received your message successfully")
+
+        res.status(200).redirect('contact');
+    } catch (err) {
+        req.flash("error", "Something went wrong")
+        res.status(200).redirect('contact');
+    }
 };
