@@ -31,7 +31,7 @@
 									</div>
 									<div class="course-br">
 										<div class="course-title">
-											<h2><a href="course-single.html" title="">
+											<h2><a href="/courses/<%= user.courses[i].slug %>" title="">
 													<%= user.courses[i].name %>
 												</a></h2>
 										</div>
@@ -279,6 +279,52 @@
 					</div>
 					</div>
 					</div>
+					<% if(user.role==='admin' ) { %>
+						<div class="all-title-box">
+							<div class="container text-center">
+								<h1>
+									<%= user.name %><span class="m_1">admin</span>
+								</h1>
+							</div>
+						</div>
+						<div id="overviews" class="section wb">
+							<div class="container">
+								<div class="row mt-5">
+									<table class="table">
+										<thead>
+											<tr>
+												<th scope="col">ID#</th>
+												<th scope="col">Email</th>
+												<th scope="col">Role</th>
+												<th scope="col">Delete</th>
+											</tr>
+										</thead>
+										<tbody>
+											<% for (let i=0; i< users.length; i++) { %>
+												<tr>
+													<th scope="row">
+														<%=users[i]._id %>
+													</th>
+													<td>
+														<%=users[i].email %>
+													</td>
+													<td>
+														<%=users[i].role %>
+													</td>
+													<td><a href="/users/<%= users[i]._id %>?_method=DELETE"
+															onclick="return confirm('ARE YOU SURE')"
+															class="btn btn-danger rounded-0 text-white"><span>DELETE</span></a>
+													</td>
+												</tr>
+												<% } %>
+										</tbody>
+									</table>
+								</div><!-- end row -->
+							</div><!-- end container -->
+						</div><!-- end section -->
+
+						<% } %>
 
 
-					<%- include('partials/_footer.ejs') %>
+
+							<%- include('partials/_footer.ejs') %>
