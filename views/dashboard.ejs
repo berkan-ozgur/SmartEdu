@@ -320,6 +320,39 @@
 										</tbody>
 									</table>
 								</div><!-- end row -->
+								<div class="row mt-5">
+									<h2>Categories</h2>
+									<table class="table">
+										<thead>
+											<tr>
+												<th scope="col">ID#</th>
+												<th scope="col">Name</th>
+												<th scope="col">Add</th>
+												<th scope="col">Delete</th>
+											</tr>
+										</thead>
+										<tbody>
+											<% for (let i=0; i< categories.length; i++) { %>
+												<tr>
+													<th scope="row">
+														<%=categories[i]._id %>
+													</th>
+													<td>
+														<%=categories[i].name %>
+													</td>
+													<td><button class="btn btn-lg btn-warning rounded-0 text-white"
+															href="#" data-toggle="modal"
+															data-target="#addCategory"><span>
+																ADD</span></button></td>
+													<td><a href="/categories/<%= categories[i]._id %>?_method=DELETE"
+															onclick="return confirm('ARE YOU SURE')"
+															class="btn btn-danger rounded-0 text-white"><span>DELETE</span></a>
+													</td>
+												</tr>
+												<% } %>
+										</tbody>
+									</table>
+								</div><!-- end row -->
 							</div><!-- end container -->
 						</div><!-- end section -->
 
